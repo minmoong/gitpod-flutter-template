@@ -2,7 +2,8 @@ image:
   file: .gitpod.Dockerfile
 
 tasks:
-  - before: source ~/.bashrc
+  - name: Build project
+    before: source ~/.bashrc
     init: |
       if test ! -e "pubspec.yaml"; then {
         rm -f /workspace/.template_init
@@ -16,6 +17,7 @@ tasks:
       ### This line is necessary for the below `- name: Run project` to await before proceeding to `flutter run` when prebuilds are not effective
       # We could use `gp sync-[done|await] <id>` but that won't work between `init` and `command`
       touch /workspace/.template_init
+  - name: Run project
     command: |
       printf "\033[3J\033c\033[3J" && if test ! -e /workspace/.template_init; then {
         printf 'info[gitpod]: %s\n' "Waiting for the flutter build process to complete ..."
